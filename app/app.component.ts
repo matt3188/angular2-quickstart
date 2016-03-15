@@ -1,8 +1,11 @@
-import { Component }       from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
+import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
+
 import { HeroService }     from './hero.service';
 import { HeroesComponent } from './heroes.component';
+import { HeroDetailComponent } from './hero-detail.component';
+
 import { DashboardComponent } from './dashboard.component';
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 
 @Component({
   selector: 'my-app',
@@ -32,7 +35,26 @@ import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/route
     component: DashboardComponent,
     useAsDefault: true
   },
+  {
+    path: '/detail/:id',
+    name: 'HeroDetail',
+    component: HeroDetailComponent
+  },
 ])
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Tour of Heroes';
+  heroes: Hero[];
+  selectedHero: Hero;
+
+  constructor(private _heroService: HeroService) { }
+  
+  getHeroes() {
+    this._heroService.getHeroes().then(heroes => this.heroes = heroes);
+  }
+  
+  ngOnInit() {
+    this.getHeroes();
+  }
+  
+  onSelect(hero: Hero) { this.selectedHero = hero; }
 }
