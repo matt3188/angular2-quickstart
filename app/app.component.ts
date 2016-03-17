@@ -19,31 +19,32 @@ import { DashboardComponent } from './dashboard.component';
 })
 @RouteConfig([
   {
-    path: '/heroes',
-    name: 'Heroes',
-    component: HeroesComponent
-  },
-  {
     path: '/dashboard',
     name: 'Dashboard',
     component: DashboardComponent,
     useAsDefault: true
   },
   {
+    path: '/heroes',
+    name: 'Heroes',
+    component: HeroesComponent
+  },
+  {
     path: '/detail/:id',
     name: 'HeroDetail',
     component: HeroDetailComponent
-  },
+  }
 ])
 export class AppComponent implements OnInit {
+
   title = 'Tour of Heroes';
   heroes: Hero[];
   selectedHero: Hero;
 
-  constructor(private _heroService: HeroService) { }
+  constructor( private _heroService: HeroService ) { }
   
   getHeroes() {
-    this._heroService.getHeroes().then(heroes => this.heroes = heroes);
+    this._heroService.getHeroes().then( heroes => this.heroes = heroes );
   }
   
   ngOnInit() {
@@ -51,4 +52,5 @@ export class AppComponent implements OnInit {
   }
   
   onSelect(hero: Hero) { this.selectedHero = hero; }
+  
 }
